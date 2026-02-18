@@ -172,6 +172,7 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:qr_scanner_app/screens/history_screen.dart';
 import 'package:qr_scanner_app/settings/settings.dart';
 
 // Screens
@@ -306,7 +307,12 @@ class _HomePageState extends State<HomePage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const HistoryScreen()),
+                  );
+                },
               ),
             ],
           ),
