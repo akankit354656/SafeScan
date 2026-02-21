@@ -85,12 +85,12 @@ class _HomePageState extends State<HomePage> {
           child: ListView(
             padding: const EdgeInsets.only(top: 50),
             children: [
-              ListTile(
-                leading: Icon(Icons.star_border_rounded, color: accentColor, size: 28),
-                title: const Text('Favourites',
-                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                onTap: () => Navigator.pop(context),
-              ),
+              // ListTile(
+              //   leading: Icon(Icons.star_border_rounded, color: accentColor, size: 28),
+              //   title: const Text('Favourites',
+              //       style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+              //   onTap: () => Navigator.pop(context),
+              // ),
               ListTile(
                 leading: Icon(Icons.settings_rounded, color: accentColor, size: 28),
                 title: const Text('Settings',
@@ -118,8 +118,8 @@ class _HomePageState extends State<HomePage> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              accentColor.withValues(alpha: 0.6),
-              accentColor.withValues(alpha: 0.2),
+              accentColor.withValues(alpha: 0.8),
+              accentColor.withValues(alpha: 0.4),
             ],
             begin: Alignment.bottomCenter,
             end: Alignment.topCenter,
