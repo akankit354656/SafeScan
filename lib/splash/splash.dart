@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:qr_scanner_app/main.dart';
+import 'package:qr_scanner_app/theme/theme_provider.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -45,8 +47,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 12, 119, 121),
+      backgroundColor: const Color.fromARGB(255, 55, 67, 66),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

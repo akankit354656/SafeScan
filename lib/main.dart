@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final accentColor = context.watch<ThemeProvider>().accentColor;
     return MaterialApp(
       title: 'Safe Scan',
       debugShowCheckedModeBanner: false,
@@ -48,11 +49,11 @@ class _HomePageState extends State<HomePage> {
         title: const Text(
           "Safe Scan",
           style: TextStyle(
-            color: Color.fromARGB(255, 227, 227, 227),
+            color: Color.fromARGB(255, 0, 0, 0),
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: const Color.fromARGB(255, 43, 54, 63),
+        backgroundColor: accentColor.withValues(alpha: 0.2),
         actions: [
           IconButton(
             icon: Icon(Icons.image, color: accentColor),
@@ -71,11 +72,11 @@ class _HomePageState extends State<HomePage> {
 
       drawer: Drawer(
         child: Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color.fromARGB(255, 17, 66, 101),
-                Color.fromARGB(255, 0, 5, 9),
+                accentColor.withValues(alpha: 0.6),
+                accentColor.withValues(alpha: 0.4),
               ],
               begin: Alignment.bottomCenter,
               end: Alignment.topCenter,
@@ -114,11 +115,11 @@ class _HomePageState extends State<HomePage> {
       ),
 
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color.fromARGB(255, 17, 67, 103),
-              Color.fromARGB(255, 0, 22, 38),
+              accentColor.withValues(alpha: 0.6),
+              accentColor.withValues(alpha: 0.2),
             ],
             begin: Alignment.bottomCenter,
             end: Alignment.topCenter,

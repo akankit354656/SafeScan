@@ -59,9 +59,12 @@ class _SettingsState extends State<Settings> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: _gradientColors,
+            colors: [
+                accentColor.withValues(alpha: 0.6),
+                accentColor.withValues(alpha: 0.2),
+              ],
             begin: Alignment.bottomCenter,
             end: Alignment.topCenter,
           ),
