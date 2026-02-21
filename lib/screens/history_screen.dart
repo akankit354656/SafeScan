@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:qr_scanner_app/theme/theme_provider.dart';
 import '../models/qr_history_item.dart';
 import '../utils/history_db.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -45,9 +47,9 @@ class _HistoryScreenState extends State<HistoryScreen>
     await _loadData();
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+       SnackBar(
           content: const Text('Deleted'),
-          backgroundColor: const Color(0xFF1E1E2E),
+          backgroundColor: const Color.fromARGB(255, 0, 0, 0),
           behavior: SnackBarBehavior.floating,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -97,15 +99,19 @@ class _HistoryScreenState extends State<HistoryScreen>
 
   @override
   Widget build(BuildContext context) {
+    final accentColor = context.watch<ThemeProvider>().accentColor;
+
     return Scaffold(
-      backgroundColor: const Color(0xFF0F0F1A),
+      // backgroundColor: const Color(0xFF0F0F1A),
+      backgroundColor: accentColor.withValues(alpha: 0.6),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF0F0F1A),
+        // backgroundColor: const Color(0xFF0F0F1A),
+        backgroundColor: accentColor.withValues(alpha: 0.8),
         elevation: 0,
         title: const Text(
           'QR History',
           style: TextStyle(
-            color: Colors.white,
+            color: Color.fromARGB(255, 0, 0, 0),
             fontFamily: 'Sora',
             fontWeight: FontWeight.w700,
             fontSize: 22,
@@ -115,17 +121,18 @@ class _HistoryScreenState extends State<HistoryScreen>
           if (_allHistory.isNotEmpty)
             IconButton(
               icon: const Icon(Icons.delete_sweep_rounded,
-                  color: Color(0xFFFF6B6B)),
+                  color: Color.fromARGB(255, 0, 0, 0)),
               tooltip: 'Clear All',
               onPressed: _clearAll,
             ),
         ],
         bottom: TabBar(
           controller: _tabController,
-          indicatorColor: const Color(0xFF7C83FD),
+          indicatorColor: accentColor.withValues(alpha: 0.7),
+          // indicatorColor: const Color(0xFF7C83FD),
           indicatorWeight: 3,
-          labelColor: const Color(0xFF7C83FD),
-          unselectedLabelColor: const Color(0xFF6B7280),
+          labelColor: const Color.fromARGB(255, 0, 0, 0),
+          unselectedLabelColor: const Color.fromARGB(255, 0, 0, 0),
           labelStyle: const TextStyle(
               fontFamily: 'Sora', fontWeight: FontWeight.w600, fontSize: 14),
           tabs: [
@@ -135,7 +142,7 @@ class _HistoryScreenState extends State<HistoryScreen>
                 children: [
                   const Icon(Icons.history_rounded, size: 18),
                   const SizedBox(width: 6),
-                  const Text('All'),
+                  const Text('All',style: TextStyle(fontWeight: FontWeight.bold),),
                   if (_allHistory.isNotEmpty) ...[
                     const SizedBox(width: 6),
                     _CountBadge(count: _allHistory.length),
@@ -163,7 +170,7 @@ class _HistoryScreenState extends State<HistoryScreen>
       body: _loading
           ? const Center(
               child:
-                  CircularProgressIndicator(color: Color(0xFF7C83FD)))
+                  CircularProgressIndicator(color: Color.fromARGB(255, 0, 0, 0)))
           : TabBarView(
               controller: _tabController,
               children: [
@@ -181,6 +188,7 @@ class _HistoryScreenState extends State<HistoryScreen>
                   emptyMessage:
                       'No favourites yet\nStar a scan to save it here',
                   emptyIcon: Icons.star_outline_rounded,
+                  
                 ),
               ],
             ),
@@ -191,17 +199,24 @@ class _HistoryScreenState extends State<HistoryScreen>
 class _CountBadge extends StatelessWidget {
   final int count;
   final bool isGold;
-  const _CountBadge({required this.count, this.isGold = false});
+  final Color? accentColor; // ← add this
+
+  const _CountBadge({
+    required this.count,
+    this.isGold = false,
+    this.accentColor, // ← add this
+  });
 
   @override
   Widget build(BuildContext context) {
+    final color = isGold
+        ? const Color(0xFFFFC107)
+        : accentColor ?? const Color(0xFF7C83FD);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       decoration: BoxDecoration(
         // ✅ withOpacity → withValues
-        color: isGold
-            ? const Color(0xFFFFC107).withValues(alpha: 0.2)
-            : const Color(0xFF7C83FD).withValues(alpha: 0.2),
+        color:  Colors.black.withValues(alpha: 0.8),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Text(
