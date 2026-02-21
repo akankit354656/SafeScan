@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../models/qr_history_item.dart';
 import '../utils/history_db.dart';
-import '../utils/qr_classifier.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 
@@ -51,7 +49,8 @@ class _HistoryScreenState extends State<HistoryScreen>
           content: const Text('Deleted'),
           backgroundColor: const Color(0xFF1E1E2E),
           behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           action: SnackBarAction(
             label: 'Undo',
             textColor: const Color(0xFF7C83FD),
@@ -70,7 +69,8 @@ class _HistoryScreenState extends State<HistoryScreen>
       context: context,
       builder: (_) => AlertDialog(
         backgroundColor: const Color(0xFF1E1E2E),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
         title: const Text('Clear All History',
             style: TextStyle(color: Colors.white, fontFamily: 'Sora')),
         content: const Text('This will delete all scanned QR history.',
@@ -78,7 +78,8 @@ class _HistoryScreenState extends State<HistoryScreen>
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: const Text('Cancel', style: TextStyle(color: Color(0xFF9CA3AF))),
+            child: const Text('Cancel',
+                style: TextStyle(color: Color(0xFF9CA3AF))),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
@@ -161,7 +162,8 @@ class _HistoryScreenState extends State<HistoryScreen>
       ),
       body: _loading
           ? const Center(
-              child: CircularProgressIndicator(color: Color(0xFF7C83FD)))
+              child:
+                  CircularProgressIndicator(color: Color(0xFF7C83FD)))
           : TabBarView(
               controller: _tabController,
               children: [
@@ -176,7 +178,8 @@ class _HistoryScreenState extends State<HistoryScreen>
                   items: _favourites,
                   onDelete: _deleteItem,
                   onToggleFav: _toggleFavourite,
-                  emptyMessage: 'No favourites yet\nStar a scan to save it here',
+                  emptyMessage:
+                      'No favourites yet\nStar a scan to save it here',
                   emptyIcon: Icons.star_outline_rounded,
                 ),
               ],
@@ -195,9 +198,10 @@ class _CountBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       decoration: BoxDecoration(
+        // ✅ withOpacity → withValues
         color: isGold
-            ? const Color(0xFFFFC107).withOpacity(0.2)
-            : const Color(0xFF7C83FD).withOpacity(0.2),
+            ? const Color(0xFFFFC107).withValues(alpha: 0.2)
+            : const Color(0xFF7C83FD).withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Text(
@@ -302,12 +306,14 @@ class _HistoryCard extends StatelessWidget {
       background: Container(
         margin: const EdgeInsets.only(bottom: 12),
         decoration: BoxDecoration(
-          color: const Color(0xFFFF6B6B).withOpacity(0.15),
+          // ✅ Fixed
+          color: const Color(0xFFFF6B6B).withValues(alpha: 0.15),
           borderRadius: BorderRadius.circular(18),
         ),
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(right: 20),
-        child: const Icon(Icons.delete_rounded, color: Color(0xFFFF6B6B), size: 26),
+        child: const Icon(Icons.delete_rounded,
+            color: Color(0xFFFF6B6B), size: 26),
       ),
       onDismissed: (_) => onDelete(),
       child: GestureDetector(
@@ -318,14 +324,16 @@ class _HistoryCard extends StatelessWidget {
             color: const Color(0xFF1A1A2E),
             borderRadius: BorderRadius.circular(18),
             border: Border.all(
+              // ✅ Fixed
               color: item.isFavourite
-                  ? const Color(0xFFFFC107).withOpacity(0.3)
+                  ? const Color(0xFFFFC107).withValues(alpha: 0.3)
                   : const Color(0xFF2D2D44),
               width: 1.5,
             ),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.3),
+                // ✅ Fixed — was erroneously 'color.withValues', now Colors.black
+                color: Colors.black.withValues(alpha: 0.3),
                 blurRadius: 8,
                 offset: const Offset(0, 4),
               ),
@@ -336,20 +344,20 @@ class _HistoryCard extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Emoji icon
                 Container(
                   width: 46,
                   height: 46,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF7C83FD).withOpacity(0.1),
+                    // ✅ Fixed
+                    color: const Color(0xFF7C83FD).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(13),
                   ),
                   child: Center(
-                    child: Text(item.emoji, style: const TextStyle(fontSize: 22)),
+                    child: Text(item.emoji,
+                        style: const TextStyle(fontSize: 22)),
                   ),
                 ),
                 const SizedBox(width: 14),
-                // Content
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -360,7 +368,9 @@ class _HistoryCard extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 3),
                             decoration: BoxDecoration(
-                              color: const Color(0xFF7C83FD).withOpacity(0.15),
+                              // ✅ Fixed
+                              color: const Color(0xFF7C83FD)
+                                  .withValues(alpha: 0.15),
                               borderRadius: BorderRadius.circular(8),
                             ),
                             child: Text(
@@ -400,7 +410,6 @@ class _HistoryCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 8),
-                // Star button
                 GestureDetector(
                   onTap: onToggleFav,
                   child: AnimatedSwitcher(

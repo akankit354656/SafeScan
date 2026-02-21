@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:qr_scanner_app/theme/theme_provider.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -8,7 +10,7 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  Color selectedColor = Colors.red;
+  Color selectedColor = Colors.teal;
   String selectedTheme = 'Dark';
   bool beep = false;
   bool vibrate = true;
@@ -39,8 +41,10 @@ class _SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
+    // Read accent color once here, passed down to helper methods
+    final accentColor = context.watch<ThemeProvider>().accentColor;
+
     return Scaffold(
-      // ── Kill the default white Scaffold background ──
       backgroundColor: const Color(0xFF003300),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -53,7 +57,6 @@ class _SettingsState extends State<Settings> {
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Container(
-        // ── Full-screen gradient ──
         width: double.infinity,
         height: double.infinity,
         decoration: const BoxDecoration(
@@ -67,21 +70,18 @@ class _SettingsState extends State<Settings> {
           child: LayoutBuilder(
             builder: (context, constraints) {
               return SingleChildScrollView(
-                // ── physics so it always scrolls even when content is short ──
                 physics: const AlwaysScrollableScrollPhysics(),
                 child: ConstrainedBox(
-                  // ── Forces content to be AT LEAST the full visible height ──
-                  // so the gradient always fills the screen even when
-                  // there's little content.
                   constraints: BoxConstraints(minHeight: constraints.maxHeight),
                   child: IntrinsicHeight(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 12),
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // ── Color Scheme ──────────────────────────
                           _sectionLabel("Color Scheme"),
                           const SizedBox(height: 10),
                           Wrap(
@@ -90,8 +90,12 @@ class _SettingsState extends State<Settings> {
                             children: colorSwatches.map((color) {
                               final bool isSelected = selectedColor == color;
                               return GestureDetector(
-                                onTap: () =>
-                                    setState(() => selectedColor = color),
+                                onTap: () {
+                                  setState(() => selectedColor = color);
+                                  context
+                                      .read<ThemeProvider>()
+                                      .setAccentColor(color);
+                                },
                                 child: Container(
                                   width: 48,
                                   height: 48,
@@ -100,15 +104,17 @@ class _SettingsState extends State<Settings> {
                                     borderRadius: BorderRadius.circular(10),
                                     border: isSelected
                                         ? Border.all(
-                                            color: Colors.white, width: 3)
+                                            color: Colors.white,
+                                            width: 3,
+                                          )
                                         : null,
                                     boxShadow: isSelected
                                         ? [
                                             BoxShadow(
-                                                color:
-                                                    color.withOpacity(0.6),
-                                                blurRadius: 8,
-                                                spreadRadius: 2)
+                                              color: color.withValues(alpha: 0.6),
+                                              blurRadius: 8,
+                                              spreadRadius: 2,
+                                            ),
                                           ]
                                         : null,
                                   ),
@@ -120,12 +126,10 @@ class _SettingsState extends State<Settings> {
                           const SizedBox(height: 24),
                           const Divider(color: Colors.white24),
 
-                          // ── Theme Dropdown ────────────────────────
                           _sectionLabel("Theme (Dropdown)"),
                           const SizedBox(height: 8),
                           Container(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 12),
+                            padding: const EdgeInsets.symmetric(horizontal: 12),
                             decoration: BoxDecoration(
                               color: Colors.white10,
                               borderRadius: BorderRadius.circular(8),
@@ -136,11 +140,17 @@ class _SettingsState extends State<Settings> {
                                 value: selectedTheme,
                                 dropdownColor: const Color(0xFF004466),
                                 style: const TextStyle(
-                                    color: Colors.white, fontSize: 16),
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                ),
                                 isExpanded: true,
                                 items: ['Dark', 'Light', 'System']
-                                    .map((t) => DropdownMenuItem(
-                                        value: t, child: Text(t)))
+                                    .map(
+                                      (t) => DropdownMenuItem(
+                                        value: t,
+                                        child: Text(t),
+                                      ),
+                                    )
                                     .toList(),
                                 onChanged: (val) =>
                                     setState(() => selectedTheme = val!),
@@ -151,16 +161,17 @@ class _SettingsState extends State<Settings> {
                           const SizedBox(height: 8),
                           const Divider(color: Colors.white24),
 
-                          // ── Checkboxes ────────────────────────────
                           _checkboxTile(
                             title: "Beep",
                             value: beep,
+                            accentColor: accentColor,
                             onChanged: (v) => setState(() => beep = v!),
                           ),
                           const Divider(color: Colors.white24),
                           _checkboxTile(
                             title: "Vibrate",
                             value: vibrate,
+                            accentColor: accentColor,
                             onChanged: (v) => setState(() => vibrate = v!),
                           ),
                           const Divider(color: Colors.white24),
@@ -169,6 +180,7 @@ class _SettingsState extends State<Settings> {
                             subtitle:
                                 "Automatically open websites after scanning QR with URL",
                             value: autoOpenUrls,
+                            accentColor: accentColor,
                             onChanged: (v) =>
                                 setState(() => autoOpenUrls = v!),
                           ),
@@ -176,12 +188,11 @@ class _SettingsState extends State<Settings> {
                           _checkboxTile(
                             title: "Add scans to history",
                             value: addToHistory,
+                            accentColor: accentColor,
                             onChanged: (v) =>
                                 setState(() => addToHistory = v!),
                           ),
 
-                          // ── This Spacer pushes everything up and
-                          //    fills remaining space with gradient ──
                           const Spacer(),
                         ],
                       ),
@@ -212,20 +223,24 @@ class _SettingsState extends State<Settings> {
     required String title,
     String? subtitle,
     required bool value,
+    required Color accentColor,
     required ValueChanged<bool?> onChanged,
   }) {
     return CheckboxListTile(
-      title:
-          Text(title, style: const TextStyle(color: Colors.white, fontSize: 16)),
+      title: Text(
+        title,
+        style: const TextStyle(color: Colors.white, fontSize: 16),
+      ),
       subtitle: subtitle != null
-          ? Text(subtitle,
-              style:
-                  const TextStyle(color: Colors.white54, fontSize: 12))
+          ? Text(
+              subtitle,
+              style: const TextStyle(color: Colors.white54, fontSize: 12),
+            )
           : null,
       value: value,
       onChanged: onChanged,
       checkColor: Colors.white,
-      activeColor: Colors.teal,
+      activeColor: accentColor, // ← uses selected accent color
       side: const BorderSide(color: Colors.white54),
       contentPadding: EdgeInsets.zero,
       controlAffinity: ListTileControlAffinity.trailing,
