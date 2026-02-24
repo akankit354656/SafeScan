@@ -102,10 +102,8 @@ class _HistoryScreenState extends State<HistoryScreen>
     final accentColor = context.watch<ThemeProvider>().accentColor;
 
     return Scaffold(
-      // backgroundColor: const Color(0xFF0F0F1A),
       backgroundColor: accentColor.withValues(alpha: 0.6),
       appBar: AppBar(
-        // backgroundColor: const Color(0xFF0F0F1A),
         backgroundColor: accentColor.withValues(alpha: 0.8),
         elevation: 0,
         title: const Text(
@@ -179,7 +177,7 @@ class _HistoryScreenState extends State<HistoryScreen>
                   onDelete: _deleteItem,
                   onToggleFav: _toggleFavourite,
                   emptyMessage: 'No scans yet',
-                  emptyIcon: Icons.qr_code_scanner_rounded,
+                  emptyIcon: Icons.qr_code_scanner_rounded,              
                 ),
                 _HistoryList(
                   items: _favourites,
@@ -187,6 +185,7 @@ class _HistoryScreenState extends State<HistoryScreen>
                   onToggleFav: _toggleFavourite,
                   emptyMessage:
                       'No favourites yet\nStar a scan to save it here',
+                      
                   emptyIcon: Icons.star_outline_rounded,
                   
                 ),
@@ -209,9 +208,6 @@ class _CountBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isGold
-        ? const Color(0xFFFFC107)
-        : accentColor ?? const Color(0xFF7C83FD);
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       decoration: BoxDecoration(
@@ -259,7 +255,7 @@ class _HistoryList extends StatelessWidget {
               emptyMessage,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                color: Color(0xFF4B5563),
+                color: Color.fromARGB(255, 0, 0, 0),
                 fontSize: 16,
                 fontFamily: 'Sora',
                 height: 1.6,
