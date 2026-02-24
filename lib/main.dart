@@ -54,20 +54,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         backgroundColor: accentColor.withValues(alpha: 0.2),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.image, color: accentColor),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: Icon(Icons.flashlight_on, color: accentColor),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: Icon(Icons.camera_alt, color: accentColor),
-            onPressed: () {},
-          ),
-        ],
       ),
 
       drawer: Drawer(
@@ -85,12 +71,6 @@ class _HomePageState extends State<HomePage> {
           child: ListView(
             padding: const EdgeInsets.only(top: 50),
             children: [
-              // ListTile(
-              //   leading: Icon(Icons.star_border_rounded, color: accentColor, size: 28),
-              //   title: const Text('Favourites',
-              //       style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-              //   onTap: () => Navigator.pop(context),
-              // ),
               ListTile(
                 leading: Icon(Icons.settings_rounded, color: accentColor, size: 28),
                 title: const Text('Settings',
