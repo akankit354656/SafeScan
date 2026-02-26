@@ -22,7 +22,6 @@ class ThemeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // In theme_provider.dart
   bool _vibrate = true;
   bool get vibrate => _vibrate;
 
