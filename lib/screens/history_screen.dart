@@ -244,7 +244,7 @@ class _HistoryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (items.isEmpty) {
+    if (items.isEmpty) { 
       return Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

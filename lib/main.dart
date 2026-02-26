@@ -56,44 +56,6 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: accentColor.withValues(alpha: 0.2),
       ),
 
-      drawer: Drawer(
-        child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                accentColor.withValues(alpha: 0.6),
-                accentColor.withValues(alpha: 0.4),
-              ],
-              begin: Alignment.bottomCenter,
-              end: Alignment.topCenter,
-            ),
-          ),
-          child: ListView(
-            padding: const EdgeInsets.only(top: 50),
-            children: [
-              ListTile(
-                leading: Icon(Icons.settings_rounded, color: accentColor, size: 28),
-                title: const Text('Settings',
-                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Settings()));
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.history_rounded, color: accentColor, size: 28),
-                title: const Text('History',
-                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const HistoryScreen()));
-                },
-              ),
-            ],
-          ),
-        ),
-      ),
-
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -111,22 +73,66 @@ class _HomePageState extends State<HomePage> {
             children: [
               const Text(
                 "Welcome to Safe Scan",
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
               ),
               const SizedBox(height: 30),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const ScanScreen()));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ScanScreen()),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 40,
+                    vertical: 15,
+                  ),
                   backgroundColor: accentColor, // ← accent color on button
                 ),
                 child: const Text(
                   "Start Scanning",
-                  style: TextStyle(fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: SizedBox(
+        height: 56,
+        child: BottomAppBar(
+          color: accentColor.withValues(alpha: 0.4),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              IconButton(
+                icon: const Icon(Icons.history_rounded, color: Colors.black87),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HistoryScreen(),
+                    ),
+                  );
+                },
+              ),
+              IconButton(
+                icon: const Icon(Icons.settings_rounded, color: Colors.black87),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Settings()),
+                  );
+                },
               ),
             ],
           ),
