@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:vibration/vibration.dart';
 import '../utils/qr_classifier.dart';
 import '../widgets/qr_result_sheet.dart';
 import 'package:qr_scanner_app/theme/theme_provider.dart'; // adjust path if needed
@@ -70,6 +71,16 @@ class _ScanScreenState extends State<ScanScreen> {
     final String? content = barcode.rawValue;
     if (content != null) {
       setState(() => _isDetected = true);
+
+      final shouldVibrate = context.read<ThemeProvider>().vibrate;
+    if (shouldVibrate) {
+      Vibration.hasVibrator().then((hasVibrator) {
+        if (hasVibrator ) {
+          Vibration.vibrate(duration: 200);
+        }
+      });
+    }
+
       final type = QRClassifier.classify(content);
       showModalBottomSheet(
         context: context,

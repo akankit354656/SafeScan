@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: accentColor.withValues(alpha: 0.2),
+        backgroundColor: accentColor.withValues(alpha: 0.8),
       ),
 
       body: Container(

@@ -21,4 +21,13 @@ class ThemeProvider extends ChangeNotifier {
     _accentColor = color;
     notifyListeners();
   }
+
+  // In theme_provider.dart
+  bool _vibrate = true;
+  bool get vibrate => _vibrate;
+
+  void setVibrate(bool value) {
+    _vibrate = value;
+    notifyListeners();
+  }
 }

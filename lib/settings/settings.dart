@@ -173,9 +173,9 @@ class _SettingsState extends State<Settings> {
                           const Divider(color: Colors.white24),
                           _checkboxTile(
                             title: "Vibrate",
-                            value: vibrate,
+                            value: context.watch<ThemeProvider>().vibrate,
                             accentColor: accentColor,
-                            onChanged: (v) => setState(() => vibrate = v!),
+                            onChanged: (v) => context.read<ThemeProvider>().setVibrate(v!),
                           ),
                           const Divider(color: Colors.white24),
                           _checkboxTile(
