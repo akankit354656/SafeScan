@@ -60,7 +60,7 @@ class _HomePageState extends State<HomePage> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              accentColor.withValues(alpha: 0.8),
+              accentColor.withValues(alpha: 0.9),
               accentColor.withValues(alpha: 0.4),
             ],
             begin: Alignment.bottomCenter,
@@ -108,15 +108,14 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: SizedBox(
-        height: 56,
+        height: 80,
         child: BottomAppBar(
           color: accentColor.withValues(alpha: 0.4),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              IconButton(
-                icon: const Icon(Icons.history_rounded, color: Colors.black87),
-                onPressed: () {
+              InkWell(
+                onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -124,15 +123,44 @@ class _HomePageState extends State<HomePage> {
                     ),
                   );
                 },
+                borderRadius: BorderRadius.circular(8),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.history_rounded, color: Colors.black87),
+                      SizedBox(height: 2),
+                      Text(
+                        'History',
+                        style: TextStyle(fontSize: 12, color: Colors.black87),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              IconButton(
-                icon: const Icon(Icons.settings_rounded, color: Colors.black87),
-                onPressed: () {
+              InkWell(
+                onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const Settings()),
                   );
                 },
+                borderRadius: BorderRadius.circular(8),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.settings_rounded, color: Colors.black87),
+                      SizedBox(height: 2),
+                      Text(
+                        'Settings',
+                        style: TextStyle(fontSize: 12, color: Colors.black87),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),

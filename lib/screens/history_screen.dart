@@ -267,7 +267,7 @@ class _HistoryList extends StatelessWidget {
     }
 
     return ListView.builder(
-      padding: const EdgeInsets.fromLTRB(16, 12, 16, 24),
+      padding: const EdgeInsets.fromLTRB(12, 12, 12, 24),
       itemCount: items.length,
       itemBuilder: (context, index) {
         final item = items[index];
@@ -332,14 +332,14 @@ class _HistoryCard extends StatelessWidget {
         child: Container(
           margin: const EdgeInsets.only(bottom: 12),
           decoration: BoxDecoration(
-            color: const Color(0xFF1A1A2E),
+            color: const Color.fromARGB(255, 0, 0, 0),
             borderRadius: BorderRadius.circular(18),
             border: Border.all(
               // ✅ Fixed
               color: item.isFavourite
-                  ? const Color(0xFFFFC107).withValues(alpha: 0.3)
+                  ? const Color.fromARGB(255, 250, 254, 0).withValues(alpha: 0.8)
                   : const Color(0xFF2D2D44),
-              width: 1.5,
+              width: 3.0,
             ),
             boxShadow: [
               BoxShadow(
@@ -398,7 +398,8 @@ class _HistoryCard extends StatelessWidget {
                           Text(
                             _formatDate(item.scannedAt),
                             style: const TextStyle(
-                              color: Color(0xFF4B5563),
+                              color: Color.fromARGB(255, 1, 247, 1),
+                              // color: Color(0xFF4B5563),
                               fontSize: 11,
                               fontFamily: 'Sora',
                             ),
@@ -411,7 +412,7 @@ class _HistoryCard extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                          color: Color(0xFFD1D5DB),
+                          color: Color.fromARGB(255, 0, 247, 218),
                           fontSize: 13,
                           fontFamily: 'Sora',
                           height: 1.5,
